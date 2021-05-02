@@ -1,6 +1,7 @@
 const User = require('./User.js');
 const Post = require('./Post.js');
 const Vote = require('./Vote.js');
+const Comment = require('./Comment.js');
 
 User.hasMany(Post, {
     foreignKey: 'user_id'
@@ -14,6 +15,10 @@ User.belongsToMany(Post, {
 
 User.hasMany(Vote, {
     foreignKey: 'user_id'
+});
+
+User.hasMany(Comment, {
+    foreignKey: 'post_id'
 });
 
 Post.belongsTo(User, {
@@ -30,12 +35,24 @@ Post.hasMany(Vote, {
     foreignKey: 'post_id'
 });
 
+Post.hasMany(Comment, {
+    foreignKey: 'post_id'
+});
+
 Vote.belongsTo(User, {
     foreignKey: 'user_id'
-});;
+});
 
 Vote.belongsTo(Post, {
     foreignKey: 'post_id'
 });
 
-module.exports = { User, Post, Vote };
+Comment.belongsTo(User, {
+    foreignKey: 'user_id'
+});
+
+Comment.belongsTo(Post, {
+    foreignKey: 'post_id'
+});
+
+module.exports = { User, Post, Vote, Comment };
